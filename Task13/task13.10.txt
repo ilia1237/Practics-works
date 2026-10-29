@@ -1,0 +1,18 @@
+def parse_broken_file(path="demo/broken.txt"):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            tokens = f.read().split()
+    except FileNotFoundError:
+        return 0, f"Файл '{path}' не знайдено."
+        
+    total_sum = 0
+    error_indices = []
+    
+    for idx, token in enumerate(tokens):
+        try:
+            num = float(token) if "." in token else int(token)
+            total_sum += num
+        except ValueError:
+            error_indices.append(idx)
+            
+    return total_sum, error_indices
